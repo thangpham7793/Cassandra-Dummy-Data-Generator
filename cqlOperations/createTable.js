@@ -26,5 +26,4 @@ const createTable = (path) => {
     })
 }
 
-createTable(path)
 module.exports = createTable

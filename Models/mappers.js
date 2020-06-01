@@ -19,9 +19,12 @@ const componentCountByUserDocumentId = makeMapper(
   'component_count_by_user_document_id'
 )
 
+const componentMapper = makeMapper(client, 'Component', 'component')
+
 module.exports = {
   userByEmailMapper,
   courseByUserIdMapper,
   folderByCourseIdMapper,
   componentCountByUserDocumentId,
+  componentMapper,
 }
