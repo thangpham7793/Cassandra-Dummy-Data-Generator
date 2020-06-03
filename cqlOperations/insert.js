@@ -1,28 +1,30 @@
 const mappers = require('../Models/mappers')
 const fakeData = require('./fakeData/fakeData')
-const client = require('../client')
+const insertTableData = require('./fakeData/utils/insertTableData')
 
-let count = 0
+const insertComponentData = insertTableData(
+  fakeData.makeManyComponentRows,
+  mappers.componentMapper
+)
 
-const insertComponentData = async (numOfEntries) => {
-  // make an array of promised inserts
-  const promises = fakeData
-    .makeManyComponentData(numOfEntries)
-    .map(async (dataObject) => {
-      mappers.componentMapper
-        .insert(dataObject)
-        .then(() => {
-          //console.log(`Successfully insert ${Object.values(dataObject)}`)
-          console.log(count++)
-        })
-        .catch((err) => console.error(err))
-    })
-  // NOTE: don't know why this promise resolves before each individual one
-  Promise.all(promises)
-    .then(() => console.log('Successfully insert all entries!'))
-    .catch((error) => console.error(error))
-}
+const insertUserByActivityData = insertTableData(
+  fakeData.makeManyUserByActivityRows,
+  mappers.userByActivityMapper
+)
+
+const insertComponentByDateData = insertTableData(
+  fakeData.makeManyComponentByDateRows,
+  mappers.componentByDateMapper
+)
+
+const insertInstitutionByUserData = insertTableData(
+  fakeData.makeManyInstitutionByUserRows,
+  mappers.institutionByUserMapper
+)
 
 module.exports = {
   insertComponentData,
+  insertUserByActivityData,
+  insertComponentByDateData,
+  insertInstitutionByUserData,
 }

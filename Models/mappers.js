@@ -1,30 +1,29 @@
 const client = require('../client')
 const makeMapper = require('./mapperMaker')
 
-const userByEmailMapper = makeMapper(client, 'UserByEmail', 'user_by_email')
-const courseByUserIdMapper = makeMapper(
+const userByActivityMapper = makeMapper(
   client,
-  'CourseByUserId',
-  'course_by_user_id'
-)
-const folderByCourseIdMapper = makeMapper(
-  client,
-  'FolderByCourseId',
-  'folder_by_course_id'
+  'UserByActivity',
+  'user_by_activity'
 )
 
-const componentCountByUserDocumentId = makeMapper(
+const componentByDateMapper = makeMapper(
   client,
-  'ComponentCountByUserDocumentId',
-  'component_count_by_user_document_id'
+  'ComponentByDate',
+  'component_by_date'
+)
+
+const institutionByUserMapper = makeMapper(
+  client,
+  'InstitutionByUser',
+  'institution_by_user'
 )
 
 const componentMapper = makeMapper(client, 'Component', 'component')
 
 module.exports = {
-  userByEmailMapper,
-  courseByUserIdMapper,
-  folderByCourseIdMapper,
-  componentCountByUserDocumentId,
+  userByActivityMapper,
+  componentByDateMapper,
+  institutionByUserMapper,
   componentMapper,
 }

@@ -1,29 +1,11 @@
-const client = require('./client')
-const tables = require('./Models/mappers')
+const createTable = require('./cqlOperations/createTable')
+const insert = require('./cqlOperations/insert')
 
-client.connect().then(() => console.log('Connected to local node!'))
+//insert.insertUserByActivityData(3)
 
-const test = async (tables) => {
-  const promises = await Object.keys(tables).map((key) =>
-    tables[key].findAll().then((result) => {
-      console.log(`Got ${Object.entries(result)}`)
-      console.log(`-------------------------------------------`)
-    })
-  )
-  Promise.all(promises)
-    .then(() => {
-      console.log('All tables seem to work!')
-      client.shutdown()
-    })
-    .catch((err) => {
-      console.error(err)
-      client.shutdown()
-    })
-}
+//createTable('./tableSchema/user_by_activity.cql')
 
-test(tables)
+//createTable('./tableSchema/institution_by_user.cql')
 
-// tables.folderByCourseIdMapper
-//   .findAll()
-//   .then((result) => console.log(`Got ${Object.entries(result)}`))
-//   .catch((err) => console.error(err))
+//insert.insertInstitutionByUserData(190)
+insert.insertComponentData(5)

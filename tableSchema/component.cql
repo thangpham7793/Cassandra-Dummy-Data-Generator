@@ -1,5 +1,6 @@
 CREATE TABLE component (
   course_id TEXT,
+  paper_id TEXT,
   document_id TEXT,
   author_id TEXT,
   author_full_name TEXT,
@@ -8,7 +9,7 @@ CREATE TABLE component (
   size INT,
   time_added DATE,
   PRIMARY KEY (
-    (course_id),
+    (course_id, paper_id),
     document_id,
     type,
     author_id,

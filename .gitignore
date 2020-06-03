@@ -4,3 +4,4 @@ npm-debug.log
 .env
 .DS_Store
 prettier.config.js
+secure-connect-cassandra-test.zip
