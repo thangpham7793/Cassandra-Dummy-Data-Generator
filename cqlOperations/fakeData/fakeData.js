@@ -19,9 +19,9 @@ const getCoursePaperAndDocId = () => {
     ['courseB', 'paperB2', 'docB21'],
     ['courseB', 'paperB2', 'docB22'],
     ['courseB', 'paperB2', 'docB23'],
-    ['courseC', 'paperC1', 'docC21'],
-    ['courseC', 'paperC1', 'docC22'],
-    ['courseC', 'paperC1', 'docC23'],
+    ['courseC', 'paperC1', 'docC11'],
+    ['courseC', 'paperC1', 'docC12'],
+    ['courseC', 'paperC1', 'docC13'],
     ['courseC', 'paperC2', 'docC21'],
     ['courseC', 'paperC2', 'docC22'],
     ['courseC', 'paperC2', 'docC23'],
@@ -32,6 +32,7 @@ const getCoursePaperAndDocId = () => {
     course_id: info[0],
     paper_id: info[1],
     document_id: info[2],
+    component_id: Uuid.random(),
   }
 }
 
@@ -153,24 +154,16 @@ const makeOneUserByActivityRow = () => {
   ]
   const month = randomIndex(1, 5)()
   const week = randomIndex(1, 5)()
-  let day
-  if (week === 1) {
-    day = randomIndex(1, 8)()
-  } else if (week === 2) {
-    day = randomIndex(8, 15)()
-  } else if (week === 3) {
-    day = randomIndex(15, 22)()
-  } else if (week === 4) {
-    day = randomIndex(22, 29)()
-  }
+  const day = randomIndex(1, 31)()
+  const associationArr = ['uniA', 'uniB', 'uniC', 'independent']
+  const association = { association: associationArr[randomIndex(0, 4)()] }
   const login_time = randomIndex(5, 15)()
   const logout_time = randomIndex(1, 4)() + login_time
   const userInfo = userIdAndStatus[randomIndex(0, userIdAndStatus.length)()]
   return {
-    month,
-    week,
-    day,
+    month: month,
     ...userInfo,
+    ...association,
     //need to add +0000 or Cassandra will convert it to GMT time
     login_time: `2020-${month}-${day} ${login_time}:00:00+0000`,
     logout_time: `2020-${month}-${day} ${logout_time}:00:00+0000`,
@@ -245,9 +238,75 @@ const makeOneInstitutionByUserRow = () => {
 
 const makeManyInstitutionByUserRows = makeMany(makeOneInstitutionByUserRow)
 
+// ANCHOR: marked_component_by_user_id
+
+const updateOneMarkedComponentByUserIdRow = () => {
+  return {
+    user_id: '1',
+    paper_id: 'paperA',
+    doc_id: 'docA1',
+    bookmarked: { bookmark2: 'URL' },
+    annotated: { annotated2: 'URL' },
+  }
+}
+
+const updateManyMarkedComponentByUserIdRows = makeMany(
+  updateOneMarkedComponentByUserIdRow
+)
+
+//ANCHOR: file_usage_by_month
+const makeOneFileUsageByMonthRow = () => {
+  const coursePaperAndDocId = [
+    ['uniA', 'courseA1', 'paperA11'],
+    ['uniA', 'courseA1', 'paperA12'],
+    ['uniA', 'courseA1', 'paperA13'],
+    ['uniA', 'courseA2', 'paperA21'],
+    ['uniA', 'courseA2', 'paperA22'],
+    ['uniA', 'courseA2', 'paperA23'],
+    ['uniB', 'courseB1', 'paperB11'],
+    ['uniB', 'courseB1', 'paperB12'],
+    ['uniB', 'courseB1', 'paperB13'],
+    ['uniB', 'courseB2', 'paperB21'],
+    ['uniB', 'courseB2', 'paperB22'],
+    ['uniB', 'courseB2', 'paperB23'],
+    ['uniC', 'courseC1', 'paperC11'],
+    ['uniC', 'courseC1', 'paperC12'],
+    ['uniC', 'courseC1', 'paperC13'],
+    ['uniC', 'courseC2', 'paperC21'],
+    ['uniC', 'courseC2', 'paperC22'],
+    ['uniC', 'courseC2', 'paperC23'],
+  ]
+  const index = randomIndex(0, coursePaperAndDocId.length)()
+  const info = coursePaperAndDocId[index]
+  const ids = {
+    school_id: info[0],
+    course_id: info[1],
+    paper_id: info[2],
+    component_id: Uuid.random(),
+  }
+  const type = ['video', 'audio', 'attachment', 'image'][randomIndex(0, 4)()]
+
+  const size = { size: randomIndex(50, 500)() }
+  const randomDate = randomIndex(1, 31)()
+  const randomMonth = randomIndex(1, 5)()
+  const timeAdded = { time_added: `2020-${randomMonth}-${randomDate}` }
+
+  return {
+    month: randomMonth,
+    ...ids,
+    ...timeAdded,
+    type: type,
+    ...size,
+  }
+}
+
+const makeManyFileUsageByMonthRows = makeMany(makeOneFileUsageByMonthRow)
+console.log(makeOneFileUsageByMonthRow())
 module.exports = {
   makeManyComponentRows,
   makeManyUserByActivityRows,
   makeManyComponentByDateRows,
   makeManyInstitutionByUserRows,
+  makeManyFileUsageByMonthRows,
+  updateManyMarkedComponentByUserIdRows,
 }

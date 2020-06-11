@@ -13,17 +13,24 @@ const componentByDateMapper = makeMapper(
   'component_by_date'
 )
 
-const institutionByUserMapper = makeMapper(
+const componentMapper = makeMapper(client, 'Component', 'component')
+
+const markedComponentByUserIdMapper = makeMapper(
   client,
-  'InstitutionByUser',
-  'institution_by_user'
+  'MarkedComponentByUserId',
+  'marked_component_by_user_id'
 )
 
-const componentMapper = makeMapper(client, 'Component', 'component')
+const fileUsageByMonthMapper = makeMapper(
+  client,
+  'FileUsageByMonthMapper',
+  'file_usage_by_month'
+)
 
 module.exports = {
   userByActivityMapper,
   componentByDateMapper,
-  institutionByUserMapper,
+  fileUsageByMonthMapper,
   componentMapper,
+  markedComponentByUserIdMapper,
 }

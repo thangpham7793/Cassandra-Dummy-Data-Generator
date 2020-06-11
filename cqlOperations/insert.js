@@ -22,9 +22,15 @@ const insertInstitutionByUserData = insertTableData(
   mappers.institutionByUserMapper
 )
 
+const insertFileUsageByMonthData = insertTableData(
+  fakeData.makeManyFileUsageByMonthRows,
+  mappers.fileUsageByMonthMapper
+)
+
 module.exports = {
   insertComponentData,
   insertUserByActivityData,
   insertComponentByDateData,
   insertInstitutionByUserData,
+  insertFileUsageByMonthData,
 }
