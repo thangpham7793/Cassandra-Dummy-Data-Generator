@@ -5,7 +5,7 @@ const mappers = require('./Models/mappers')
 const client = require('./client')
 
 //insert.insertUserByActivityData(1000)
-
+//insert.insertFileUsageByMonthData(1000)
 //createTable('./tableSchema/user_by_activity.cql')
 
 //createTable('./tableSchema/institution_by_user.cql')
@@ -53,4 +53,4 @@ const updateUsingSet = `UPDATE marked_component_by_user_id SET annotated = annot
 //   .then(() => console.log('Success!'))
 //   .catch((err) => console.log(err))
 
-insert.insertFileUsageByMonthData(495)
+//insert.insertFileUsageByMonthData(495)

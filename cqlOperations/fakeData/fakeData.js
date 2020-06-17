@@ -152,8 +152,7 @@ const makeOneUserByActivityRow = () => {
       new_user: true,
     },
   ]
-  const month = randomIndex(1, 5)()
-  const week = randomIndex(1, 5)()
+  const month = randomIndex(1, 13)()
   const day = randomIndex(1, 31)()
   const associationArr = ['uniA', 'uniB', 'uniC', 'independent']
   const association = { association: associationArr[randomIndex(0, 4)()] }
@@ -279,7 +278,7 @@ const makeOneFileUsageByMonthRow = () => {
   const index = randomIndex(0, coursePaperAndDocId.length)()
   const info = coursePaperAndDocId[index]
   const ids = {
-    school_id: info[0],
+    association: info[0],
     course_id: info[1],
     paper_id: info[2],
     component_id: Uuid.random(),
@@ -288,7 +287,7 @@ const makeOneFileUsageByMonthRow = () => {
 
   const size = { size: randomIndex(50, 500)() }
   const randomDate = randomIndex(1, 31)()
-  const randomMonth = randomIndex(1, 5)()
+  const randomMonth = randomIndex(1, 13)()
   const timeAdded = { time_added: `2020-${randomMonth}-${randomDate}` }
 
   return {
