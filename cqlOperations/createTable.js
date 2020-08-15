@@ -1,12 +1,16 @@
-const fs = require('fs')
-const client = require('../client')
+const fs = require("fs")
+const client = require("../client")
 
+//read cql file from path
 const readQueryFile = (path) => {
-  const query = fs.readFileSync(path, 'utf8', (err, res) => {
-    if (err) console.log(err)
-  })
-  //console.log(query)
-  return query
+  try {
+    const query = fs.readFileSync(path, "utf8", (err, res) => {
+      if (err) console.log(err)
+    })
+    return query
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const createTable = (path) => {
